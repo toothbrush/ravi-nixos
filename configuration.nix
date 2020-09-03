@@ -73,7 +73,16 @@ vlc
 dmenu
 dwm
 st   
- vim
+rxvt-unicode
+vim
+pass
+xmobar
+xmonad-with-packages
+gnupg
+spotify
+gnumake
+stow
+mu
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -91,8 +100,8 @@ st
   # services.printing.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -108,6 +117,7 @@ st
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.dwm.enable = true;
   # services.xserver.videoDrivers = [ "nvidia" ];
 
