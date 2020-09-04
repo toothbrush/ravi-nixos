@@ -65,24 +65,25 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    dmenu
+    dwm
+    emacs
+    firefox
+    git
+    gnumake
+    gnupg
+    mu
+    pass
+    pinentry-gtk2
+    rxvt-unicode
+    spotify
+    st
+    stow
+    vim
+    vlc
     wget
-git
-emacs
-firefox
-vlc
-dmenu
-dwm
-st   
-rxvt-unicode
-vim
-pass
-xmobar
-xmonad-with-packages
-gnupg
-spotify
-gnumake
-stow
-mu
+    xmobar
+    xmonad-with-packages
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -124,7 +125,7 @@ mu
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.paul = {
     isNormalUser = true;
-    extraGroups = [ 
+    extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
     ];
@@ -140,4 +141,3 @@ mu
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-
