@@ -71,8 +71,10 @@
     git
     gnumake
     gnupg
+    glxinfo
     mu
     pass
+    nixfmt
     pinentry-gtk2
     rxvt-unicode
     spotify
