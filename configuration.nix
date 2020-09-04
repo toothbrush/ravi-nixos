@@ -93,7 +93,7 @@
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "gtk2";
-    defaultCacheTTL = 3600;
+    # defaultCacheTtl = 3600;
   };
 
   # List services that you want to enable:
