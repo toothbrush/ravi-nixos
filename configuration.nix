@@ -4,6 +4,16 @@
 
 { config, pkgs, ... }:
 
+
+let
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -64,29 +74,32 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    dmenu
-    dwm
-    emacs
-    firefox
-    git
-    gnumake
-    gnupg
-    glxinfo
-    mu
-    pass
-    nixfmt
-    pinentry-gtk2
-    rxvt-unicode
-    spotify
-    st
-    stow
-    vim
-    vlc
-    wget
-    xmobar
-    xmonad-with-packages
-  ];
+  environment.systemPackages = [ nvidia-offload ] ++ (
+    with pkgs; [
+      dmenu
+      dwm
+      emacs
+      firefox
+      git
+      glxinfo
+      gnumake
+      gnupg
+      mu
+      nixpkgs-fmt
+      pass
+      pinentry-gtk2
+      rxvt-unicode
+      spotify
+      st
+      stow
+      terminus_font
+      vim
+      vlc
+      wget
+      xmobar
+      xmonad-with-packages
+    ]
+  );
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -122,7 +135,30 @@
   # services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.dwm.enable = true;
-  # services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  hardware = {
+    nvidia.optimus_prime = {
+      enable = true;
+      # offload.enable = true;
+
+      # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+      intelBusId = "PCI:0:2:0";
+
+      # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+      nvidiaBusId = "PCI:60:0:0";
+    };
+    opengl = {
+      extraPackages = [
+        pkgs.libGL_driver
+        #         pkgs.linuxPackages.nvidia_x11.out
+        pkgs.vaapiIntel
+        pkgs.vaapiVdpau
+        pkgs.libvdpau-va-gl
+      ];
+      driSupport = true;
+      # driSupport32Bit = true;
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.paul = {
