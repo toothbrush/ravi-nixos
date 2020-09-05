@@ -89,12 +89,14 @@ in
       pass
       pinentry-gtk2
       rxvt-unicode
+      signal-desktop
       spotify
       st
       stow
       vim
       vlc
       wget
+      xdotool
       xmobar
       xmonad-with-packages
     ]
