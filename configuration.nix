@@ -122,7 +122,6 @@ in
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -141,7 +140,12 @@ in
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+
   hardware = {
+    bluetooth.enable = false;
+    cpu.intel.updateMicrocode = true;
+    pulseaudio.enable = true;
+
     nvidia.optimus_prime = {
       enable = true;
       # offload.enable = true;
