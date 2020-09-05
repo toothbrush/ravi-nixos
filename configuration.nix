@@ -92,7 +92,6 @@ in
       spotify
       st
       stow
-      terminus_font
       vim
       vlc
       wget
@@ -100,6 +99,10 @@ in
       xmonad-with-packages
     ]
   );
+
+  fonts.fonts = with pkgs; [
+    terminus_font
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
