@@ -153,7 +153,7 @@ in
 
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.dwm.enable = true;
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  services.xserver.videoDrivers = [ "intel" "modesetting" "nvidia" ];
 
   hardware = {
     bluetooth.enable = false;
