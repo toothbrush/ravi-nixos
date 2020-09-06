@@ -3,8 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -64,10 +62,6 @@ in
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_AU.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
 
   # Set your time zone.
   time.timeZone = "Australia/Melbourne";
@@ -158,9 +152,6 @@ in
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = true;
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
@@ -170,26 +161,13 @@ in
     cpu.intel.updateMicrocode = true;
     pulseaudio.enable = true;
 
-    nvidia.optimus_prime = {
-      enable = true;
-      # offload.enable = true;
-
+    nvidia.prime = {
+      offload.enable = true;
       # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
       intelBusId = "PCI:0:2:0";
 
       # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
       nvidiaBusId = "PCI:60:0:0";
-    };
-    opengl = {
-      extraPackages = [
-        pkgs.libGL_driver
-        #         pkgs.linuxPackages.nvidia_x11.out
-        pkgs.vaapiIntel
-        pkgs.vaapiVdpau
-        pkgs.libvdpau-va-gl
-      ];
-      driSupport = true;
-      # driSupport32Bit = true;
     };
   };
   powerManagement.enable = true;
@@ -201,7 +179,7 @@ in
       "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
     ];
-    # TODO set users.mutableUsers = false and pin password hash.
+    # TODO set zsh
   };
 
   # This value determines the NixOS release from which the default
@@ -210,6 +188,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "20.09"; # Did you read the comment?
 
 }
