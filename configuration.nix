@@ -134,14 +134,10 @@ in
       START_CHARGE_THRESH_BAT0=65
       STOP_CHARGE_THRESH_BAT0=80
       DEVICES_TO_DISABLE_ON_STARTUP="bluetooth wwan"
-      ENERGY_PERF_POLICY_ON_AC=performance
-      ENERGY_PERF_POLICY_ON_BAT=power
-      CPU_HWP_ON_AC=performance
-      CPU_HWP_ON_BAT=power
       CPU_BOOST_ON_AC=1
       CPU_BOOST_ON_BAT=0
       CPU_ENERGY_PERF_POLICY_ON_AC=performance
-      CPU_ENERGY_PERF_POLICY_ON_BAT=power
+      CPU_ENERGY_PERF_POLICY_ON_BAT=balance_power
       CPU_SCALING_GOVERNOR_ON_AC=performance
       CPU_SCALING_GOVERNOR_ON_BAT=powersave
       RUNTIME_PM_DRIVER_BLACKLIST="mei_me"
