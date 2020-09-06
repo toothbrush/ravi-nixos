@@ -134,6 +134,23 @@ in
   services.xserver.enable = true;
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
+  services.tlp = {
+    enable = true;
+    extraConfig = ''
+      ENERGY_PERF_POLICY_ON_AC=performance
+      ENERGY_PERF_POLICY_ON_BAT=power
+      CPU_HWP_ON_AC=performance
+      CPU_HWP_ON_BAT=power
+      CPU_BOOST_ON_AC=1
+      CPU_BOOST_ON_BAT=0
+      CPU_ENERGY_PERF_POLICY_ON_AC=performance
+      CPU_ENERGY_PERF_POLICY_ON_BAT=power
+      CPU_SCALING_GOVERNOR_ON_AC=performance
+      CPU_SCALING_GOVERNOR_ON_BAT=powersave
+      RUNTIME_PM_DRIVER_BLACKLIST="mei_me"
+    '';
+  };
+
   services.xserver.xkbOptions = "ctrl:nocaps";
   console.useXkbConfig = true;
 
