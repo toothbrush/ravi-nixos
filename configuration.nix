@@ -71,6 +71,7 @@ in
   environment.systemPackages = [ nvidia-offload ] ++ (
     with pkgs; [
       bc
+      brightnessctl
       dmenu
       dwm
       emacs
@@ -81,12 +82,14 @@ in
       gnupg
       go
       irssi
+      isync
       mu
       nixpkgs-fmt
       pass
       pavucontrol
       pciutils
       pinentry-gtk2
+      rsync
       rxvt-unicode
       signal-desktop
       silver-searcher
@@ -96,6 +99,7 @@ in
       tree
       vim
       vlc
+      w3m
       wget
       xdotool
       xmobar
@@ -115,6 +119,8 @@ in
     pinentryFlavor = "gtk2";
     # defaultCacheTtl = 3600;
   };
+
+  programs.ssh.startAgent = true;
 
   # List services that you want to enable:
 
