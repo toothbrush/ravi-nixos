@@ -131,6 +131,9 @@ in
   services.tlp = {
     enable = true;
     extraConfig = ''
+      START_CHARGE_THRESH_BAT0=65
+      STOP_CHARGE_THRESH_BAT0=80
+      DEVICES_TO_DISABLE_ON_STARTUP="bluetooth wwan"
       ENERGY_PERF_POLICY_ON_AC=performance
       ENERGY_PERF_POLICY_ON_BAT=power
       CPU_HWP_ON_AC=performance
