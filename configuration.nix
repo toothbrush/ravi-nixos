@@ -76,6 +76,7 @@ in
   # $ nix search wget
   environment.systemPackages = [ nvidia-offload ] ++ (
     with pkgs; [
+      bc
       dmenu
       dwm
       emacs
@@ -84,15 +85,21 @@ in
       glxinfo
       gnumake
       gnupg
+      go
+      irssi
       mu
       nixpkgs-fmt
       pass
+      pavucontrol
+      pciutils
       pinentry-gtk2
       rxvt-unicode
       signal-desktop
+      silver-searcher
       spotify
       st
       stow
+      tree
       vim
       vlc
       wget
