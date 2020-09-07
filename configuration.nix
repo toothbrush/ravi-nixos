@@ -70,6 +70,7 @@ in
   # $ nix search wget
   environment.systemPackages = [ nvidia-offload ] ++ (
     with pkgs; [
+      arandr
       bc
       brightnessctl
       dmenu
@@ -88,9 +89,11 @@ in
       pass
       pavucontrol
       pciutils
+      perl
       pinentry-gtk2
       rsync
       rxvt-unicode
+      shellcheck
       signal-desktop
       silver-searcher
       spotify
