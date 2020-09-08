@@ -20,6 +20,9 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  # screen locker
+  programs.xss-lock.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -162,6 +165,10 @@ in
       RUNTIME_PM_DRIVER_BLACKLIST = "mei_me";
     };
   };
+
+  services.logind.extraConfig = ''
+    IdleActionSec=300min
+  '';
 
   services.xserver.xkbOptions = "ctrl:nocaps";
   console.useXkbConfig = true;
