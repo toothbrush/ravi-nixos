@@ -73,26 +73,35 @@ in
       arandr
       bc
       brightnessctl
+      cargo
       dmenu
       dwm
       emacs
       firefox
       flameshot
+      gcc
       git
       glxinfo
       gnumake
       gnupg
       go
+      htop
+      i3lock
       irssi
       isync
       mu
+      ncdu
       nixpkgs-fmt
       pass
       pavucontrol
       pciutils
       perl
       pinentry-gtk2
+      powertop
       rsync
+      rustc
+      rustfmt
+      rust-analyzer
       rxvt-unicode
       shellcheck
       signal-desktop
@@ -108,6 +117,7 @@ in
       xdotool
       xmobar
       xmonad-with-packages
+      xorg.xev
     ]
   );
 
@@ -121,7 +131,6 @@ in
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "gtk2";
-    # defaultCacheTtl = 3600;
   };
 
   programs.ssh.startAgent = true;
