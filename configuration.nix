@@ -74,6 +74,10 @@ in
   environment.systemPackages = [ nvidia-offload ] ++ (
     with pkgs; [
       arandr
+      aspell
+      aspellDicts.en
+      aspellDicts.fr
+      aspellDicts.nl
       bc
       brightnessctl
       cargo
