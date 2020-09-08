@@ -92,6 +92,7 @@ in
       gnumake
       gnupg
       go
+      gopls
       htop
       i3lock
       irssi
