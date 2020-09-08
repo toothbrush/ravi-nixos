@@ -77,6 +77,7 @@ in
       dwm
       emacs
       firefox
+      flameshot
       git
       glxinfo
       gnumake
