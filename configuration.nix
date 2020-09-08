@@ -126,6 +126,7 @@ in
       xmobar
       xmonad-with-packages
       xorg.xev
+      youtube-dl
     ]
   );
 
