@@ -28,6 +28,12 @@ in
 
   # screen locker
   programs.xss-lock.enable = true;
+  programs.zsh =
+    {
+      enable = true;
+      syntaxHighlighting.enable = true;
+      enableCompletion = true;
+    };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -84,6 +90,7 @@ in
       aspellDicts.en
       aspellDicts.fr
       aspellDicts.nl
+      autojump
       bc
       brightnessctl
       cargo
@@ -92,6 +99,7 @@ in
       emacs
       firefox
       flameshot
+      fzf
       gcc
       git
       glxinfo
@@ -134,6 +142,8 @@ in
       xorg.xkbcomp
       xorg.xev
       youtube-dl
+      zsh-history-substring-search
+      zsh-syntax-highlighting
     ]
   );
 
@@ -222,7 +232,7 @@ in
       "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
     ];
-    # TODO set zsh
+    shell = pkgs.zsh;
   };
 
   # This value determines the NixOS release from which the default
