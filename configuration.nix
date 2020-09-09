@@ -155,7 +155,6 @@ in
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
   services.tlp = {
     enable = true;
     settings = {
@@ -176,7 +175,7 @@ in
     IdleActionSec=300min
   '';
 
-  services.xserver.xkbOptions = "ctrl:nocaps";
+  services.xserver.xkbOptions = "ctrl:nocaps,altwin:swap_alt_win";
   console.useXkbConfig = true;
 
   # Enable touchpad support.
