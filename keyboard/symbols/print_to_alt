@@ -1,0 +1,4 @@
+partial
+xkb_symbols "print_alt" {
+    key <PRSC> {	[ Alt_R,	Meta_R		]	};
+};

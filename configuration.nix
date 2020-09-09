@@ -11,6 +11,12 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec -a "$0" "$@"
   '';
+  compiledDefaultLayout = pkgs.runCommand "keyboard-layout" { } ''
+    ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./keyboard/default-layout.xkb} $out
+  '';
+  compiledInternalLayout = pkgs.runCommand "keyboard-layout" { } ''
+    ${pkgs.xorg.xkbcomp}/bin/xkbcomp -I${./keyboard} ${./keyboard/internal-layout.xkb} $out
+  '';
 in
 {
   imports = [
@@ -125,6 +131,7 @@ in
       xdotool
       xmobar
       xmonad-with-packages
+      xorg.xkbcomp
       xorg.xev
       youtube-dl
     ]
@@ -154,7 +161,6 @@ in
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  # services.xserver.layout = "us";
   services.tlp = {
     enable = true;
     settings = {
@@ -175,8 +181,15 @@ in
     IdleActionSec=300min
   '';
 
-  services.xserver.xkbOptions = "ctrl:nocaps,altwin:swap_alt_win";
+  # Remap caps->ctrl in console ttys
+  services.xserver.xkbOptions = "ctrl:nocaps";
   console.useXkbConfig = true;
+
+  services.xserver.displayManager.sessionCommands = ''
+    ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledDefaultLayout} $DISPLAY
+    export THINKPAD_KBD_ID=$(xinput list --id-only 'AT Translated Set 2 keyboard')
+    ${pkgs.xorg.xkbcomp}/bin/xkbcomp -i $THINKPAD_KBD_ID ${compiledInternalLayout} $DISPLAY
+  '';
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
