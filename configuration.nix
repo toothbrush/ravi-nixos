@@ -136,6 +136,7 @@ in
       w3m
       wget
       xcape
+      xclip
       xdotool
       xmobar
       xmonad-with-packages
