@@ -230,6 +230,7 @@ in
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledDefaultLayout} $DISPLAY
     export THINKPAD_KBD_ID=$(xinput list --id-only 'AT Translated Set 2 keyboard')
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp -i $THINKPAD_KBD_ID ${compiledInternalLayout} $DISPLAY
+    export PATH="$HOME/bin:$PATH"
   '';
 
   # Enable touchpad support.
