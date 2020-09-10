@@ -120,9 +120,9 @@ in
       pinentry-gtk2
       powertop
       rsync
+      rust-analyzer
       rustc
       rustfmt
-      rust-analyzer
       rxvt-unicode
       shellcheck
       signal-desktop
@@ -139,8 +139,8 @@ in
       xdotool
       xmobar
       xmonad-with-packages
-      xorg.xkbcomp
       xorg.xev
+      xorg.xkbcomp
       xorg.xrandr
       youtube-dl
       zsh-history-substring-search
