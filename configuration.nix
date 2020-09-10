@@ -139,6 +139,7 @@ in
       xmonad-with-packages
       xorg.xkbcomp
       xorg.xev
+      xorg.xrandr
       youtube-dl
       zsh-history-substring-search
       zsh-syntax-highlighting
@@ -182,6 +183,35 @@ in
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       RUNTIME_PM_DRIVER_BLACKLIST = "mei_me";
+    };
+  };
+
+  services.udev = {
+    extraRules = ''
+      ACTION=="change", KERNEL=="card1", SUBSYSTEM=="drm", RUN+="${pkgs.systemd}/bin/systemctl --no-block start resetDisplayPanel.service"
+    '';
+  };
+  # Turning it into user service would make it less brittle!  However,
+  # triggering a user service from udev rule doesn't seem trivial.
+  # Presumably it's looking in /root's services.  We could also use
+  # User=.. in the service definition, but i'd be surprised if that
+  # gives access to the necessary $DISPLAY and $XAUTHORITY values.
+  systemd.services."resetDisplayPanel" = {
+    environment = {
+      XAUTHORITY = "/home/paul/.Xauthority";
+      DISPLAY = ":0";
+    };
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''
+        ${pkgs.xorg.xrandr}/bin/xrandr \
+          --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+          --output DP1 --off \
+          --output DP2 --off \
+          --output HDMI1 --off \
+          --output HDMI2 --off \
+          --output VIRTUAL1 --off
+      '';
     };
   };
 
