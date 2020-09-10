@@ -137,6 +137,7 @@ in
       vlc
       w3m
       wget
+      xcape
       xdotool
       xmobar
       xmonad-with-packages
@@ -234,6 +235,16 @@ in
       "networkmanager"
     ];
     shell = pkgs.zsh;
+  };
+
+  systemd.user.services."xcape" = {
+    enable = true;
+    description = "xcape to use Super_L as Compose when pressed alone";
+    wantedBy = [ "default.target" ];
+    serviceConfig.Type = "forking";
+    serviceConfig.Restart = "always";
+    serviceConfig.RestartSec = 2;
+    serviceConfig.ExecStart = ''${pkgs.xcape}/bin/xcape -e "Super_L=Multi_key"'';
   };
 
   # This value determines the NixOS release from which the default
