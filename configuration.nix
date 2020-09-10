@@ -131,7 +131,7 @@ in
       st
       stow
       tree
-      vim
+      vimHugeX
       vlc
       w3m
       wget
