@@ -94,6 +94,7 @@ in
       bc
       brightnessctl
       cargo
+      discount # for markdown
       dmenu
       dwm
       emacs
