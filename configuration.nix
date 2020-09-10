@@ -82,6 +82,7 @@ in
   environment.systemPackages = [ nvidia-offload ] ++ (
     with pkgs; [
       arandr
+      arc-theme
       aspell
       aspellDicts.en
       aspellDicts.fr
@@ -113,6 +114,7 @@ in
       mu
       ncdu
       nixpkgs-fmt
+      paper-icon-theme
       pass
       pavucontrol
       pciutils
@@ -188,7 +190,8 @@ in
       RUNTIME_PM_DRIVER_BLACKLIST = "mei_me";
     };
   };
-
+  # Has to be enabled for gnome applications settings to work
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
   services.udev = {
     extraRules = ''
       ACTION=="change", KERNEL=="card1", SUBSYSTEM=="drm", RUN+="${pkgs.systemd}/bin/systemctl --no-block start resetDisplayPanel.service"
