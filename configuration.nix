@@ -88,8 +88,10 @@ in
       aspellDicts.nl
       autojump
       bc
+      binutils # for `ar' command.
       brightnessctl
       cargo
+      coreutils
       discount # for markdown
       dmenu
       dwm
