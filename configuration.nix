@@ -152,6 +152,9 @@ in
   );
 
   fonts.fonts = with pkgs; [
+    emojione
+    noto-fonts
+    noto-fonts-emoji
     terminus_font
   ];
 
@@ -234,11 +237,14 @@ in
     export THINKPAD_KBD_ID=$(xinput list --id-only 'AT Translated Set 2 keyboard')
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp -i $THINKPAD_KBD_ID ${compiledInternalLayout} $DISPLAY
     export PATH="$HOME/bin:$PATH"
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6
+    xinput --set-prop 'TPPS/2 Elan TrackPoint' 'libinput Accel Speed' -0.5
   '';
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = true;
+  services.xserver.libinput.clickMethod = "clickfinger";
 
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.dwm.enable = true;
