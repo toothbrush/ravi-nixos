@@ -133,6 +133,7 @@ in
       st
       stow
       tree
+      unzip
       vimHugeX
       vlc
       w3m
