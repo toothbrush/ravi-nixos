@@ -196,6 +196,8 @@ in
   };
   # Has to be enabled for gnome applications settings to work
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  programs.dconf.enable = true;
+
   services.udev = {
     extraRules = ''
       ACTION=="change", KERNEL=="card1", SUBSYSTEM=="drm", RUN+="${pkgs.systemd}/bin/systemctl --no-block start resetDisplayPanel.service"
