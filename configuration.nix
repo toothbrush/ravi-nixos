@@ -104,6 +104,7 @@ in
       gcc
       git
       glxinfo
+      gnucash
       gnumake
       gnupg
       go
