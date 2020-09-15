@@ -95,6 +95,7 @@ in
       coreutils
       discount # for markdown
       dmenu
+      dunst
       dwm
       emacs
       firefox
@@ -195,7 +196,11 @@ in
     };
   };
   # Has to be enabled for gnome applications settings to work
-  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  services.dbus.packages = with pkgs; [
+    gnome3.dconf
+    dunst
+  ];
+  systemd.packages = [ pkgs.dunst ];
   programs.dconf.enable = true;
 
   services.udev = {
