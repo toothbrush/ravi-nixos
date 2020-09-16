@@ -248,6 +248,7 @@ in
     export PATH="$HOME/bin:$PATH"
     xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6
     xinput --set-prop 'TPPS/2 Elan TrackPoint' 'libinput Accel Speed' -0.5
+    xcalib ${./LG_Display___LP140WFA_SPD1.icm}
   '';
 
   # Enable touchpad support.
