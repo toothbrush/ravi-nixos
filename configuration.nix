@@ -88,6 +88,8 @@ in
       aspellDicts.fr
       aspellDicts.nl
       autojump
+      aws-vault
+      awscli
       bc
       binutils # for `ar' command.
       brightnessctl
