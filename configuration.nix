@@ -125,6 +125,7 @@ in
       perl
       pinentry-gtk2
       powertop
+      restic
       rsync
       rust-analyzer
       rustc
