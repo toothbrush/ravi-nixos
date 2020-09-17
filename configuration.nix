@@ -35,6 +35,10 @@ in
       enableCompletion = true;
     };
 
+  security.pam.services = {
+    lightdm.enableGnomeKeyring = true;
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -203,10 +207,17 @@ in
   # Has to be enabled for gnome applications settings to work
   services.dbus.packages = with pkgs; [
     gnome3.dconf
+    gnome3.gnome-keyring
     dunst
   ];
   systemd.packages = [ pkgs.dunst ];
   programs.dconf.enable = true;
+  programs.seahorse.enable = true;
+
+  services.gnome3 = {
+    gnome-keyring.enable = true;
+    at-spi2-core.enable = true;
+  };
 
   services.udev = {
     extraRules = ''
@@ -298,6 +309,33 @@ in
     serviceConfig.Restart = "always";
     serviceConfig.RestartSec = 2;
     serviceConfig.ExecStart = ''${pkgs.xcape}/bin/xcape -e "Super_L=Multi_key"'';
+  };
+
+  # GNOME Keyring D-BUS activation is somehow broken. Or maybe D-BUS
+  # activation in NixOS is in general somehow broken because also KBDD D-BUS
+  # activation is broken. Whenever org.freedesktop.secrets D-BUS is needed,
+  # the first attempt fails but the corresponding process starts. Then, the
+  # next D-BUS attempt works. This service is a workaround: we poke the D-BUS
+  # before any other process so it gets activated and then other processes can
+  # use it successfully. This service just pokes some endpoint, doesn't really
+  # matter what.
+  #
+  # TODO: Add D-BUS activation support to GNOME Keyring.
+  #
+  # This hack courtesy of https://github.com/jluttine/NiDE/blob/0a1db599df236559dcb639b57d895d0798262c8b/src/keyring.nix#L78
+  # -- Paul, 17/Sep/2020
+  systemd.user.services.gnome-keyring-secrets-init = {
+    description = "org.freedesktop.secrets initialization";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
+      ExecStart =
+        let
+          dbus-send = "${pkgs.dbus}/bin/dbus-send";
+        in
+        "${dbus-send} --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.StartServiceByName string:org.freedesktop.secrets uint32:0";
+    };
   };
 
   # This value determines the NixOS release from which the default
