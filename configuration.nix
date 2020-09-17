@@ -124,6 +124,7 @@ in
       pciutils
       perl
       pinentry-gtk2
+      pkgconfig
       powertop
       restic
       rsync
