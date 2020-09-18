@@ -122,6 +122,7 @@ in
       mu
       ncdu
       nixpkgs-fmt
+      openvpn
       paper-icon-theme
       pass
       pavucontrol
