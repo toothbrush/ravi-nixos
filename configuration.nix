@@ -192,9 +192,10 @@ in
   services.xserver.enable = true;
   services.tlp = {
     enable = true;
+    ## Default charging thresholds are 96/100%. See https://linrunner.de/tlp/settings/battery.html
     settings = {
-      START_CHARGE_THRESH_BAT0 = 65;
-      STOP_CHARGE_THRESH_BAT0 = 80;
+      START_CHARGE_THRESH_BAT0 = 80;
+      STOP_CHARGE_THRESH_BAT0 = 95;
       DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth wwan";
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
