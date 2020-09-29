@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -252,6 +252,32 @@ in
       '';
     };
   };
+
+  # Enable PostgresQL for local Rails development.
+  services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_12;
+  # Find available postgresql plugins with:
+  # $ nix repl '<nixpkgs>'
+  # nixpkgs> postgresql_12.pkgs.<TAB><TAB>
+  services.postgresql.extraPlugins = with pkgs.postgresql_12.pkgs; [
+    postgis
+  ];
+  # Wow, terrible hack to make authentication on localhost work.
+  # Anyway, once all this is installed one still needs to create users
+  # and databases.
+  # $ sudo -u postgres psql
+  # postgres=# create database mydb;
+  # postgres=# create user myuser;
+  # .. or if you need a password for some reason ..
+  # postgres=# create user myuser with encrypted password 'mypass';
+  # postgres=# grant all privileges on database mydb to myuser;
+  services.postgresql.authentication = lib.mkForce ''
+    # Generated file; do not edit!
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+    local   all             all                                     trust
+    host    all             all             127.0.0.1/32            trust
+    host    all             all             ::1/128                 trust
+  '';
 
   services.logind.extraConfig = ''
     IdleActionSec=300min
