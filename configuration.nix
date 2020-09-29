@@ -188,6 +188,8 @@ in
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
+  virtualisation.docker.enable = true;
+
   # Enable sound.
   sound.enable = true;
 
@@ -325,6 +327,7 @@ in
   users.users.paul = {
     isNormalUser = true;
     extraGroups = [
+      "docker"
       "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
     ];
