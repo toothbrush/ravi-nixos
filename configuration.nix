@@ -79,7 +79,7 @@ in
   i18n.defaultLocale = "en_AU.UTF-8";
 
   # Set your time zone.
-  time.timeZone = "Australia/Melbourne";
+  time.timeZone = "Australia/Darwin";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
