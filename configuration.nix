@@ -99,6 +99,7 @@ in
       brightnessctl
       cargo
       coreutils
+      direnv
       discount # for markdown
       dmenu
       dunst
