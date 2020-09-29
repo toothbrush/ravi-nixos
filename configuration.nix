@@ -163,6 +163,8 @@ in
     ]
   );
 
+  environment.homeBinInPath = true;
+
   fonts.fonts = with pkgs; [
     emojione
     noto-fonts
@@ -262,7 +264,6 @@ in
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledDefaultLayout} $DISPLAY
     export THINKPAD_KBD_ID=$(xinput list --id-only 'AT Translated Set 2 keyboard')
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp -i $THINKPAD_KBD_ID ${compiledInternalLayout} $DISPLAY
-    export PATH="$HOME/bin:$PATH"
     ${pkgs.xorg.xinput} --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6
     ${pkgs.xorg.xinput} --set-prop 'TPPS/2 Elan TrackPoint' 'libinput Accel Speed' -0.5
     ${pkgs.xcalib} ${./LG_Display___LP140WFA_SPD1.icm}
