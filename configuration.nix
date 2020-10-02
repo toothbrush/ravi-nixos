@@ -120,6 +120,7 @@ in
       i3lock
       irssi
       isync
+      jq
       mu
       ncdu
       nixpkgs-fmt
