@@ -304,6 +304,16 @@ in
   services.xserver.libinput.clickMethod = "clickfinger";
 
   services.xserver.windowManager.xmonad.enable = true;
+  services.xserver.windowManager.i3 = {
+    enable = true;
+    extraPackages = with pkgs; [
+      dmenu
+      i3status
+      i3lock
+      # See note about i3blocks if it doesn't work: https://nixos.wiki/wiki/I3#i3blocks
+      i3blocks
+    ];
+  };
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.videoDrivers = [ "intel" "modesetting" "nvidia" ];
 
@@ -341,6 +351,8 @@ in
     serviceConfig.Type = "forking";
     serviceConfig.Restart = "always";
     serviceConfig.RestartSec = 2;
+    # The list of key names is found in the header file
+    # X11/keysymdef.h (remove the XK_ prefix).
     serviceConfig.ExecStart = ''${pkgs.xcape}/bin/xcape -e "Super_L=Multi_key"'';
   };
 
