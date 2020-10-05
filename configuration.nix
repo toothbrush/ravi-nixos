@@ -69,8 +69,8 @@ in
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
+  networking.interfaces.enp0s31f6.useDHCP = false;
+  networking.interfaces.wlp0s20f3.useDHCP = false;
 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" "8.8.4.4" ];
