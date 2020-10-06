@@ -55,7 +55,13 @@
       powertop
       pqiv
       restic
-      rofi
+      (rofi.override {
+        plugins = [
+          rofi-calc
+          rofi-emoji
+          rofi-file-browser
+        ];
+      })
       rsync
       rust-analyzer
       rustc
