@@ -281,6 +281,11 @@ in
     host    all             all             ::1/128                 trust
   '';
 
+  # Trim journald history a little.
+  services.journald.extraConfig = ''
+    SystemMaxUse=1G
+    MaxFileSec=7day
+  '';
   services.logind.extraConfig = ''
     IdleActionSec=300min
   '';
