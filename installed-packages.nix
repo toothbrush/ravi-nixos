@@ -81,8 +81,6 @@
       wget
       xclip
       xdotool
-      xmobar
-      xmonad-with-packages
       xorg.xev
       xorg.xkbcomp
       xorg.xrandr

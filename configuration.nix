@@ -220,7 +220,6 @@ in
   services.xserver.libinput.naturalScrolling = true;
   services.xserver.libinput.clickMethod = "clickfinger";
 
-  services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.i3 = {
     enable = true;
     extraPackages = with pkgs; [
