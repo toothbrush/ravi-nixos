@@ -151,7 +151,6 @@ in
       vlc
       w3m
       wget
-      xcape
       xclip
       xdotool
       xmobar
@@ -343,18 +342,6 @@ in
       "networkmanager"
     ];
     shell = pkgs.zsh;
-  };
-
-  systemd.user.services."xcape" = {
-    enable = true;
-    description = "xcape to use Super_L as Compose when pressed alone";
-    wantedBy = [ "default.target" ];
-    serviceConfig.Type = "forking";
-    serviceConfig.Restart = "always";
-    serviceConfig.RestartSec = 2;
-    # The list of key names is found in the header file
-    # X11/keysymdef.h (remove the XK_ prefix).
-    serviceConfig.ExecStart = ''${pkgs.xcape}/bin/xcape -e "Super_L=Multi_key"'';
   };
 
   # GNOME Keyring D-BUS activation is somehow broken. Or maybe D-BUS
