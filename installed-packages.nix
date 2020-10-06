@@ -54,6 +54,7 @@
       pkgconfig
       powertop
       restic
+      rofi
       rsync
       rust-analyzer
       rustc
