@@ -4,13 +4,6 @@
 
 { config, pkgs, lib, ... }:
 let
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
   compiledDefaultLayout = pkgs.runCommand "keyboard-layout" { } ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./keyboard/default-layout.xkb} $out
   '';
@@ -83,7 +76,7 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = [ nvidia-offload ] ++ (
+  environment.systemPackages =
     with pkgs; [
       arandr
       arc-theme
@@ -161,8 +154,7 @@ in
       youtube-dl
       zsh-history-substring-search
       zsh-syntax-highlighting
-    ]
-  );
+    ];
 
   environment.homeBinInPath = true;
 
