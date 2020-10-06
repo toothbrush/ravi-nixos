@@ -53,6 +53,7 @@
       pinentry-gtk2
       pkgconfig
       powertop
+      pqiv
       restic
       rofi
       rsync
