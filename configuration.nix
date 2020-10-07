@@ -110,6 +110,7 @@ in
         name    "mpd"
         server  "127.0.0.1"
       }
+      auto_update "yes"
     '';
   };
 
