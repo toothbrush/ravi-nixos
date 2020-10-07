@@ -100,6 +100,12 @@ in
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
+  services.mpd = {
+    enable = true;
+    user = "paul";
+    musicDirectory = "/home/paul/Music";
+  };
+
   virtualisation.docker.enable = true;
 
   # Enable sound.

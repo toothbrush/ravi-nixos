@@ -43,6 +43,7 @@
       jq
       mu
       ncdu
+      ncmpcpp
       nixpkgs-fmt
       openvpn
       paper-icon-theme
