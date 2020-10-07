@@ -104,6 +104,13 @@ in
     enable = true;
     user = "paul";
     musicDirectory = "/home/paul/Music";
+    extraConfig = ''
+      audio_output {
+        type    "pulse"
+        name    "mpd"
+        server  "127.0.0.1"
+      }
+    '';
   };
 
   virtualisation.docker.enable = true;
