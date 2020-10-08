@@ -1,11 +1,34 @@
 xkb_keymap {
 	xkb_keycodes  { include "evdev+aliases(qwerty)"	};
-	xkb_types     { include "complete"	};
+	xkb_types     {
+        include "complete"
+        type "CUST_CAPSLOCK" {
+             modifiers = Shift+Control;
+             map[Shift] = Level2;            // maps shift and no ctrl. Shift+Alt goes here, too, because Alt isn't in modifiers.
+             map[Control] = Level3;
+             map[Shift+Control] = Level3;    // maps shift and ctrl. Shift+Control+Alt goes here, too.
+             level_name[Level1]= "Base";
+             level_name[Level2]= "Shift";
+             level_name[Level3]= "Control";
+        };
+	};
 	xkb_compat    { include "complete"	};
 	xkb_symbols   {
         include "pc+us+inet(evdev)+ctrl(nocaps)"
         // Valiant attempt to put Compose key somewhere...
         key <INS> { type[Group1]="TWO_LEVEL", [ Multi_key, Multi_key ] };
+
+        key <AB06> {
+                type = "CUST_CAPSLOCK",
+                symbols[Group1]= [               n,               N,               Down],
+                actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<DOWN>, clearmods=Control) ]
+        };
+
+        key <AD10> {
+                type = "CUST_CAPSLOCK",
+                symbols[Group1]= [               p,               P,               Up],
+                actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<UP>, clearmods=Control) ]
+        };
     };
 	xkb_geometry  { include "pc(pc104)"	};
 };
