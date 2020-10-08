@@ -245,6 +245,7 @@ in
     ];
   };
   services.xserver.windowManager.dwm.enable = true;
+  services.xserver.desktopManager.wallpaper.mode = "fill";
   services.xserver.videoDrivers = [ "intel" "modesetting" "nvidia" ];
 
   hardware = {
