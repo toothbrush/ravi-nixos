@@ -82,6 +82,7 @@ in
     emojione
     noto-fonts
     noto-fonts-emoji
+    hack-font
     terminus_font
   ];
 
