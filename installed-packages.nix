@@ -22,6 +22,7 @@
       direnv
       discount # for markdown
       dmenu
+      dnsutils
       dunst
       dwm
       emacs
