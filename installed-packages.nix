@@ -39,6 +39,7 @@
       gopls
       htop
       i3lock
+      inetutils
       irssi
       isync
       jq
