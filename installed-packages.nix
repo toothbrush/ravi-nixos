@@ -29,7 +29,7 @@
       firefox
       flameshot
       fzf
-      gcc
+      gcc10
       git
       glxinfo
       gnucash
