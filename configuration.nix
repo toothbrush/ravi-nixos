@@ -58,6 +58,12 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
+  # reference documentation:
+  # https://download.nvidia.com/XFree86/Linux-x86_64/435.21/README/dynamicpowermanagement.html
+  # and discussion:
+  # https://discourse.nixos.org/t/how-to-use-nvidia-prime-offload-to-run-the-x-server-on-the-integrated-board/9091/14
+  boot.extraModprobeConfig = "options nvidia \"NVreg_DynamicPowerManagement=0x02\"\n";
+
   networking.hostName = "ravi"; # Define your hostname.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -156,6 +162,23 @@ in
   services.udev = {
     extraRules = ''
       ACTION=="change", KERNEL=="card1", SUBSYSTEM=="drm", RUN+="${pkgs.systemd}/bin/systemctl --no-block start resetDisplayPanel.service"
+
+      # Remove NVIDIA USB xHCI Host Controller devices, if present
+      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{remove}="1"
+
+      # Remove NVIDIA USB Type-C UCSI devices, if present
+      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{remove}="1"
+
+      # Remove NVIDIA Audio devices, if present
+      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{remove}="1"
+
+      # Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
+      ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+      ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+
+      # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
+      ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
+      ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
     '';
   };
   # Turning it into user service would make it less brittle!  However,
@@ -247,7 +270,7 @@ in
   };
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.desktopManager.wallpaper.mode = "fill";
-  services.xserver.videoDrivers = [ "intel" "modesetting" "nvidia" ];
+  services.xserver.videoDrivers = [ "intel" "nvidia" ];
 
   hardware = {
     bluetooth.enable = false;
@@ -257,6 +280,8 @@ in
       load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
     ''; # Needed by mpd to be able to use Pulseaudio = true;
 
+    # false is default, but i'm putting the note here anyway.
+    nvidia.modesetting.enable = false;
     nvidia.prime = {
       offload.enable = true;
       # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
