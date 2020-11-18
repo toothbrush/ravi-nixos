@@ -56,7 +56,10 @@ in
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.nvidia_x11
+    config.boot.kernelPackages.bbswitch
+  ];
 
   networking.hostName = "ravi"; # Define your hostname.
 
