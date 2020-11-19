@@ -38,6 +38,10 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  ##### disable nvidia, somewhat less awful battery life.
+  hardware.nvidiaOptimus.disable = true;
+  boot.blacklistedKernelModules = [ "nouveau" "nvidia" ];
+
   # GRUB configuration
   boot.loader.grub = {
     enable = true;
@@ -57,7 +61,6 @@ in
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [
-    config.boot.kernelPackages.nvidia_x11
     config.boot.kernelPackages.bbswitch
   ];
 
@@ -250,7 +253,7 @@ in
   };
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.desktopManager.wallpaper.mode = "fill";
-  services.xserver.videoDrivers = [ "intel" "nvidia" ];
+  services.xserver.videoDrivers = [ "intel" ];
 
   hardware = {
     bluetooth.enable = false;
@@ -259,17 +262,6 @@ in
     pulseaudio.extraConfig = ''
       load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
     ''; # Needed by mpd to be able to use Pulseaudio = true;
-
-    # false is default, but i'm putting the note here anyway.
-    nvidia.modesetting.enable = false;
-    nvidia.prime = {
-      offload.enable = true;
-      # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-      intelBusId = "PCI:0:2:0";
-
-      # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-      nvidiaBusId = "PCI:60:0:0";
-    };
   };
   powerManagement.enable = true;
 
