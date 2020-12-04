@@ -30,6 +30,7 @@
       flameshot
       fzf
       gcc10
+      gimp
       git
       glxinfo
       gnucash
