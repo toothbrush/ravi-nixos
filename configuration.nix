@@ -232,7 +232,6 @@ in
     export THINKPAD_KBD_ID=$(xinput list --id-only 'AT Translated Set 2 keyboard')
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp -i $THINKPAD_KBD_ID ${compiledInternalLayout} $DISPLAY
     ${pkgs.xorg.xinput} --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6
-    ${pkgs.xorg.xinput} --set-prop 'TPPS/2 Elan TrackPoint' 'libinput Accel Speed' -0.5
     ${pkgs.xcalib} ${./LG_Display___LP140WFA_SPD1.icm}
   '';
 
@@ -256,6 +255,12 @@ in
   services.xserver.videoDrivers = [ "intel" ];
 
   hardware = {
+    trackpoint = {
+      enable = true;
+      emulateWheel = true;
+      speed = 200;
+      sensitivity = 128;
+    };
     bluetooth.enable = false;
     cpu.intel.updateMicrocode = true;
     pulseaudio.enable = true;
