@@ -160,7 +160,11 @@ in
   };
 
   services.udev = {
+    # HOWTO find values for KERNEL and SUBSYSTEM:
+    # `udevadm info -q all -a /dev/dri/card0`, via
+    # https://unix.stackexchange.com/questions/124817/udev-how-do-i-find-out-which-subsystem-a-device-belongs-to.
     extraRules = ''
+      ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="${pkgs.systemd}/bin/systemctl --no-block start resetDisplayPanel.service"
       ACTION=="change", KERNEL=="card1", SUBSYSTEM=="drm", RUN+="${pkgs.systemd}/bin/systemctl --no-block start resetDisplayPanel.service"
     '';
   };
