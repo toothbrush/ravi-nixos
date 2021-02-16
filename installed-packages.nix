@@ -26,6 +26,7 @@
       dunst
       dwm
       emacs
+      evince
       firefox
       flameshot
       fzf
