@@ -122,6 +122,8 @@ in
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "paul" ];
 
   # Enable sound.
   sound.enable = true;
