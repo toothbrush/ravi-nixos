@@ -21,6 +21,8 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  programs.steam.enable = true;
+
   # screen locker
   programs.xss-lock.enable = true;
   programs.zsh =
