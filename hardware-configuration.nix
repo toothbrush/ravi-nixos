@@ -29,5 +29,11 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/d029460c-1463-4ad2-812d-2ebf9ab668f9"; }];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  # Configure the governor used to regulate the frequence of the
+  # available CPUs. By default, the kernel configures the
+  # performance governor, although this may be overwritten in your
+  # hardware-configuration.nix file.
+  #
+  # Often used values: "ondemand", "powersave", "performance"
+  # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
