@@ -4,11 +4,21 @@
 
 { config, pkgs, lib, ... }:
 let
+  unstable = import <unstable> {
+    config.allowUnfree = true;
+  };
   compiledDefaultLayout = pkgs.runCommand "keyboard-layout" { } ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./keyboard/default-layout.xkb} $out
   '';
   compiledInternalLayout = pkgs.runCommand "keyboard-layout" { } ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp -I${./keyboard} ${./keyboard/internal-layout.xkb} $out
+  '';
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
   '';
 in
 {
@@ -18,6 +28,13 @@ in
     # Split out file with long list of system-wide packages.
     ./installed-packages.nix
   ];
+
+  # I know it looks like we're "shadowing" systemPackages here, which
+  # we previously set in installed-packages.nix, but apparently since
+  # the Nix language isn't imperative, you're not "setting" anything.
+  # In fact, configs get "merged", so this is in effect just appended
+  # to the existing systemPackages value set there.
+  environment.systemPackages = [ nvidia-offload ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -41,8 +58,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   ##### disable nvidia, somewhat less awful battery life.
-  hardware.nvidiaOptimus.disable = true;
-  boot.blacklistedKernelModules = [ "nouveau" "nvidia" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
 
   # GRUB configuration
   boot.loader.grub = {
@@ -61,7 +77,7 @@ in
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = unstable.linuxPackages_latest;
   boot.extraModulePackages = [
     config.boot.kernelPackages.bbswitch
   ];
@@ -124,8 +140,8 @@ in
   };
 
   virtualisation.docker.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "paul" ];
+  # virtualisation.virtualbox.host.enable = true;
+  # users.extraGroups.vboxusers.members = [ "paul" ];
 
   # Enable sound.
   sound.enable = true;
@@ -260,9 +276,18 @@ in
   };
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.desktopManager.wallpaper.mode = "fill";
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware = {
+    nvidia.modesetting.enable = false;
+    nvidia.prime = {
+      offload.enable = true;
+      # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+      intelBusId = "PCI:0:2:0";
+
+      # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+      nvidiaBusId = "PCI:60:0:0";
+    };
     trackpoint = {
       enable = true;
       emulateWheel = true;
