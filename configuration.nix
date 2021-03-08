@@ -98,7 +98,7 @@ in
   i18n.defaultLocale = "en_AU.UTF-8";
 
   # Set your time zone.
-  time.timeZone = "Australia/Darwin";
+  time.timeZone = "Australia/Melbourne";
 
   environment.homeBinInPath = true;
 
