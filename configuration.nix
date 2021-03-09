@@ -140,8 +140,9 @@ in
   };
 
   virtualisation.docker.enable = true;
-  # virtualisation.virtualbox.host.enable = true;
-  # users.extraGroups.vboxusers.members = [ "paul" ];
+
+  virtualisation.libvirtd.enable = true;
+  users.extraGroups.libvirtd.members = [ "paul" ];
 
   # Enable sound.
   sound.enable = true;

@@ -81,6 +81,7 @@
       tree
       unzip
       vimHugeX
+      virt-manager
       vlc
       w3m
       wget
