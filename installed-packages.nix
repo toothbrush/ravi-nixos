@@ -72,6 +72,7 @@
       rustc
       rustfmt
       rxvt-unicode
+      screen
       shellcheck
       signal-desktop
       silver-searcher
