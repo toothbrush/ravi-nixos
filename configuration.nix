@@ -202,6 +202,7 @@ in
     serviceConfig = {
       Type = "simple";
       ExecStart = ''
+        ${pkgs.procps}/bin/pidof X || (echo "X not running, skipping."; exit 0)
         ${pkgs.xorg.xrandr}/bin/xrandr \
           --output eDP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
           --output DP-1 --off \
